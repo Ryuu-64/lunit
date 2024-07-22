@@ -1,9 +1,9 @@
 ﻿---
 ---@class AssertionFailure
----@field messageOrSupplier table object
----@field cause table Throwable
----@field expected table object
----@field actual table object
+---@field messageOrSupplier string|fun():string
+---@field cause string
+---@field expected any
+---@field actual any
 local AssertionFailure = {}
 AssertionFailure.__index = AssertionFailure
 
@@ -47,6 +47,10 @@ local function MessageString(messageOrSupplier)
 end
 
 local function ReasonString(expected, actual)
+    if type(actual) == "nil" and type(expected) == "nil" then
+        return "nil"
+    end
+    
     return string.format(
         "expected: <%s> but was: <%s>",
         tostring(expected),
@@ -54,16 +58,27 @@ local function ReasonString(expected, actual)
     )
 end
 
+local function CauseString(cause)
+    return tostring(cause)
+end
+
 function AssertionFailure:Error()
     local errorMessages = {}
 
-    local message = MessageString(self.messageOrSupplier)
-    if message ~= "nil" then
-        table.insert(errorMessages, string.format("message: %s", message))
+    local messageString = MessageString(self.messageOrSupplier)
+    if messageString ~= "nil" then
+        table.insert(errorMessages, string.format("message: %s", messageString))
     end
 
-    local reason = ReasonString(self.expected, self.actual)
-    table.insert(errorMessages, string.format("reason: %s", reason))
+    local reasonString = ReasonString(self.expected, self.actual)
+    if reasonString ~= "nil" then
+        table.insert(errorMessages, string.format("reason: %s", reasonString))
+    end
+
+    local causeString = CauseString(self.cause)
+    if causeString ~= "nil" then
+        table.insert(errorMessages, string.format("cause: %s", causeString))
+    end
 
     error(table.concat(errorMessages, ", "))
 end

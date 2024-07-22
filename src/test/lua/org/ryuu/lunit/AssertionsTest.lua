@@ -29,6 +29,25 @@ Assertions.AssertNotEqual(37, 42)
 Assertions.Result()
 --endregion
 
+local table1 = {}
+local table2 = {}
+--region 2 tests completed, 1 failed
+Assertions.AssertRawEqual(table1, table1)
+Assertions.AssertRawEqual(table1, table2)
+status, results = pcall(Assertions.Result)
+print(status)
+print(results)
+--endregion
+
+--region 2 tests completed, 1 failed
+print("Assertions.AssertNotRawEqual")
+Assertions.AssertNotRawEqual(table1, table2)
+Assertions.AssertNotRawEqual(table1, table1)
+status, results = pcall(Assertions.Result)
+print(status)
+print(results)
+--endregion
+
 --region 1 test completed, 0 failed
 Assertions.AssertNotNil({}, "Assertions.AssertNotNil")
 Assertions.Result()
@@ -54,3 +73,9 @@ status, results = pcall(Assertions.Result)
 print(status)
 print(results)
 --endregion
+
+Assertions.AssertType(type({}), type(""), "Assertions.AssertNil")
+Assertions.AssertType({}, {}, "Assertions.AssertNil")
+status, results = pcall(Assertions.Result)
+print(status)
+print(results)

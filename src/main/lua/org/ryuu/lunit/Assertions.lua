@@ -4,10 +4,11 @@ local AssertNil = require "org.ryuu.lunit.AssertNil"
 local AssertNotNil = require "org.ryuu.lunit.AssertNotNil"
 local AssertEqual = require "org.ryuu.lunit.AssertEqual"
 local AssertNotEqual = require "org.ryuu.lunit.AssertNotEqual"
+local AssertRawEqual = require "org.ryuu.lunit.AssertRawEqual"
+local AssertNotRawEqual = require "org.ryuu.lunit.AssertNotRawEqual"
+local AssertType = require "org.ryuu.lunit.AssertType"
 
 --TODO
---AssertRawEqual
---AssertNotRawEqual
 --AssertType
 --AssertNotType
 --AssertTableEqual
@@ -23,6 +24,18 @@ end
 
 function Assertions.AssertNotEqual(unexpected, actual, messageOrSupplier)
     local status, error = pcall(AssertNotEqual, unexpected, actual, messageOrSupplier)
+    table.insert(assertResults, { status = status, error = error })
+    return status, error
+end
+
+function Assertions.AssertRawEqual(expected, actual, messageOrSupplier)
+    local status, error = pcall(AssertRawEqual, expected, actual, messageOrSupplier)
+    table.insert(assertResults, { status = status, error = error })
+    return status, error
+end
+
+function Assertions.AssertNotRawEqual(unexpected, actual, messageOrSupplier)
+    local status, error = pcall(AssertNotRawEqual, unexpected, actual, messageOrSupplier)
     table.insert(assertResults, { status = status, error = error })
     return status, error
 end
@@ -51,7 +64,13 @@ function Assertions.AssertNotNil(actual, messageOrSupplier)
     return status, error
 end
 
-local function analyzeResults(results)
+function Assertions.AssertType(expected, actual, messageOrSupplier)
+    local status, error = pcall(AssertType, expected, actual, messageOrSupplier)
+    table.insert(assertResults, { status = status, error = error })
+    return status, error
+end
+
+local function AnalyzeResults(results)
     local totalCount = #results
     local failedCount = 0
     local errorMessages = {}
@@ -66,16 +85,15 @@ local function analyzeResults(results)
     return totalCount, failedCount, errorMessages
 end
 
-local function displayResults(totalCount, failedCount)
+local function GetResultString(totalCount, failedCount)
     if totalCount == 1 then
-        print(string.format("%d test completed, %d failed", totalCount, failedCount))
-        return
+        return string.format("%d test completed, %d failed", totalCount, failedCount)
     end
 
-    print(string.format("%d tests completed, %d failed", totalCount, failedCount))
+    return string.format("%d tests completed, %d failed", totalCount, failedCount)
 end
 
-local function concatenateErrorMessages(errorMessages)
+local function ConcatenateErrorMessages(errorMessages)
     local errorMessage = ""
     for i, msg in ipairs(errorMessages) do
         errorMessage = errorMessage .. "\n" .. i .. ". " .. msg
@@ -84,17 +102,17 @@ local function concatenateErrorMessages(errorMessages)
 end
 
 function Assertions.Result()
-    local totalCount, failedCount, errorMessages = analyzeResults(assertResults)
+    local totalCount, failedCount, errorMessages = AnalyzeResults(assertResults)
+    assertResults = {}
 
-    displayResults(totalCount, failedCount)
-
-    if failedCount > 0 then
-        local errorMessage = concatenateErrorMessages(errorMessages)
-        assertResults = {}
-        error(errorMessage)
+    local resultString = GetResultString(totalCount, failedCount)
+    if failedCount == 0 then
+        print(resultString)
+        return
     end
 
-    assertResults = {}
+    local errorMessage = ConcatenateErrorMessages(errorMessages)
+    error(resultString .. errorMessage)
 end
 
 return Assertions
