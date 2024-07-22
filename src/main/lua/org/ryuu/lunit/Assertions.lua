@@ -9,7 +9,6 @@ local AssertNotRawEqual = require "org.ryuu.lunit.AssertNotRawEqual"
 local AssertType = require "org.ryuu.lunit.AssertType"
 
 --TODO
---AssertType
 --AssertNotType
 --AssertTableEqual
 local Assertions = {}
