@@ -10,7 +10,8 @@ return function(actual, messageOrSupplier)
 
     AssertionFailure.Instantiate()
         :SetMessageOrSupplier(messageOrSupplier)
-        :SetExpected("not " .. tostring(nil))
+        :SetIsExpected(false)
+        :SetExpected(nil)
         :SetActual(actual)
         :Error()
 end

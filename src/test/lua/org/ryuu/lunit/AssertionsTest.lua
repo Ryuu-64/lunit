@@ -74,8 +74,8 @@ print(status)
 print(results)
 --endregion
 
-Assertions.AssertType(type({}), type(""), "Assertions.AssertNil")
-Assertions.AssertType({}, {}, "Assertions.AssertNil")
+Assertions.AssertType(type({}), type(""), "Assertions.AssertType")
+Assertions.AssertType({}, {}, "Assertions.AssertType")
 status, results = pcall(Assertions.Result)
 print(status)
 print(results)

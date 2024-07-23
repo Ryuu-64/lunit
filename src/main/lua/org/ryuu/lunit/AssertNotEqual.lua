@@ -11,7 +11,8 @@ return function(unexpected, actual, messageOrSupplier)
 
     AssertionFailure.Instantiate()
         :SetMessageOrSupplier(messageOrSupplier)
-        :SetExpected("not " .. tostring(unexpected))
+        :SetIsExpected(false)
+        :SetExpected(unexpected)
         :SetActual(actual)
         :Error()
 end

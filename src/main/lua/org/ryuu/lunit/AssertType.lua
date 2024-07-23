@@ -1,60 +1,40 @@
 ﻿local AssertionFailure = require "org.ryuu.lunit.AssertionFailure"
 
----
----@param value any
-local function IsType(value)
+local typeStrings = {
+    ["nil"] = true,
+    ["number"] = true,
+    ["string"] = true,
+    ["boolean"] = true,
+    ["table"] = true,
+    ["function"] = true,
+    ["thread"] = true,
+    ["userdata"] = true
+}
+
+local function Is(value)
     if type(value) ~= "string" then
         return false
     end
 
-    if value == "nil" then
-        return true
+    if typeStrings[value] == nil then
+        return false
     end
 
-    if value == "number" then
-        return true
-    end
-
-    if value == "string" then
-        return true
-    end
-
-    if value == "boolean" then
-        return true
-    end
-
-    if value == "table" then
-        return true
-    end
-
-    if value == "function" then
-        return true
-    end
-
-    if value == "thread" then
-        return true
-    end
-
-    if value == "userdata" then
-        return true
-    end
-
-    return false
+    return true
 end
 
 ---
----@param expected string nil, number, string, boolean, table, function, thread, userdata
----@param actual string nil, number, string, boolean, table, function, thread, userdata
 return function(expected, actual, messageOrSupplier)
     --region try error if expected or actual is not type
     local causes = {}
-    if not IsType(expected) then
+    if not Is(expected) then
         table.insert(causes, string.format("invalid expected: <%s>", tostring(expected)))
     end
-    if not IsType(actual) then
+    if not Is(actual) then
         table.insert(causes, string.format("invalid actual: <%s>", tostring(actual)))
     end
     if #causes ~= 0 then
+        table.insert(causes, "expected and actual should be type string return by type()")
         AssertionFailure.Instantiate()
             :SetMessageOrSupplier(messageOrSupplier)
             :SetCause(table.concat(causes, ", "))
@@ -68,6 +48,7 @@ return function(expected, actual, messageOrSupplier)
 
     AssertionFailure.Instantiate()
         :SetMessageOrSupplier(messageOrSupplier)
+        :SetIsExpected(true)
         :SetExpected(expected)
         :SetActual(actual)
         :Error()

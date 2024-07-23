@@ -9,8 +9,8 @@ local AssertNotRawEqual = require "org.ryuu.lunit.AssertNotRawEqual"
 local AssertType = require "org.ryuu.lunit.AssertType"
 
 --TODO
---AssertNotType
---AssertTableEqual
+--AssertTableEqual org.junit.jupiter.api.AssertArrayEquals
+--AssertError org.junit.jupiter.api.AssertThrows
 local Assertions = {}
 
 local assertResults = {}
