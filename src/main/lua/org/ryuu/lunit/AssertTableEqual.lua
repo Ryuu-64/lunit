@@ -42,7 +42,7 @@ return function(expected, actual, messageOrSupplier)
     end
 
     if #actual ~= #expected then
-        local cause = string.format(
+        local reason = string.format(
             "lengths differ, expected: <%d> but was: <%d>",
             #expected, #actual
         )
@@ -50,7 +50,7 @@ return function(expected, actual, messageOrSupplier)
             :MessageOrSupplier(messageOrSupplier)
             :Expected(expected)
             :Actual(actual)
-            :Cause(cause)
+            :Reason(reason)
             :Error()
     end
 
@@ -67,7 +67,7 @@ return function(expected, actual, messageOrSupplier)
         return
     end
 
-    local cause = string.format(
+    local reason = string.format(
         "expected: <%s> but was: <%s>",
         TableToString(expected), TableToString(actual)
     )
@@ -75,6 +75,6 @@ return function(expected, actual, messageOrSupplier)
         :MessageOrSupplier(messageOrSupplier)
         :Expected(expected)
         :Actual(actual)
-        :Cause(cause)
+        :Reason(reason)
         :Error()
 end

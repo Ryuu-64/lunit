@@ -22,6 +22,6 @@ return function(errorFunction, messageOrSupplier)
 
     AssertionFailure.Instantiate()
         :MessageOrSupplier(messageOrSupplier)
-        :Cause("expected an error, but no error was produced")
+        :Reason("expected an error, but no error was produced")
         :Error()
 end

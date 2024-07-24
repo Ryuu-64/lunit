@@ -2,6 +2,7 @@
 ---@class AssertionFailure
 ---@field messageOrSupplier string|fun():string user-defined message or supplier of the assertion
 ---@field cause string
+---@field reason string when not nil, reason will not generate by actual and expected
 ---@field isExpected boolean true when expected, false when not expected
 ---@field expected any may be unexpected when assert not, in this case the isExpected is false
 ---@field actual any
@@ -16,6 +17,7 @@ function AssertionFailure.Instantiate()
     setmetatable(instance, AssertionFailure)
     instance.messageOrSupplier = nil
     instance.cause = nil
+    instance.reason = nil
     instance.isExpected = true
     instance.expected = nil
     instance.actual = nil
@@ -27,7 +29,11 @@ function AssertionFailure:MessageOrSupplier(messageOrSupplier)
     return self
 end
 
---TODO REMOVE Set
+function AssertionFailure:Reason(reason)
+    self.reason = reason
+    return self
+end
+
 function AssertionFailure:Cause(cause)
     self.cause = cause
     return self
@@ -89,12 +95,17 @@ function AssertionFailure:Error()
         error(table.concat(errorMessages, ", "))
     end
 
-    local reasonString = ReasonString(self.expected, self.actual, self.isExpected)
-    if reasonString ~= "nil" then
-        table.insert(errorMessages, string.format("reason: %s", reasonString))
+    if self.reason == nil then
+        local reasonString = ReasonString(self.expected, self.actual, self.isExpected)
+        if reasonString ~= "nil" then
+            table.insert(errorMessages, string.format("reason: %s", reasonString))
+        end
+    else
+        table.insert(errorMessages, string.format("reason: %s", self.reason))
     end
 
-    error(table.concat(errorMessages, ", "))
+    local errorMessage = table.concat(errorMessages, ", ")
+    error(errorMessage)
 end
 
 return AssertionFailure
