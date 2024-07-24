@@ -8,6 +8,8 @@
 local AssertionFailure = {}
 AssertionFailure.__index = AssertionFailure
 
+---
+---@return AssertionFailure
 function AssertionFailure.Instantiate()
     ---@type AssertionFailure
     local instance = {}
@@ -25,6 +27,7 @@ function AssertionFailure:SetMessageOrSupplier(messageOrSupplier)
     return self
 end
 
+--TODO REMOVE Set
 function AssertionFailure:SetCause(cause)
     self.cause = cause
     return self

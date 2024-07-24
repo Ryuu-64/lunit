@@ -7,10 +7,10 @@ local AssertNotEqual = require "org.ryuu.lunit.AssertNotEqual"
 local AssertRawEqual = require "org.ryuu.lunit.AssertRawEqual"
 local AssertNotRawEqual = require "org.ryuu.lunit.AssertNotRawEqual"
 local AssertType = require "org.ryuu.lunit.AssertType"
+local AssertError = require "org.ryuu.lunit.AssertError"
+local AssertTableEqual = require "org.ryuu.lunit.AssertTableEqual"
 
---TODO
---AssertTableEqual org.junit.jupiter.api.AssertArrayEquals
---AssertError org.junit.jupiter.api.AssertThrows
+---@class Assertions
 local Assertions = {}
 
 local assertResults = {}
@@ -65,6 +65,18 @@ end
 
 function Assertions.AssertType(expected, actual, messageOrSupplier)
     local status, error = pcall(AssertType, expected, actual, messageOrSupplier)
+    table.insert(assertResults, { status = status, error = error })
+    return status, error
+end
+
+function Assertions.AssertError(errorFunction, messageOrSupplier)
+    local status, error = pcall(AssertError, errorFunction, messageOrSupplier)
+    table.insert(assertResults, { status = status, error = error })
+    return status, error
+end
+
+function Assertions.AssertTableEqual(expected, actual, messageOrSupplier)
+    local status, error = pcall(AssertTableEqual, expected, actual, messageOrSupplier)
     table.insert(assertResults, { status = status, error = error })
     return status, error
 end

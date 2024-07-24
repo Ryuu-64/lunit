@@ -74,8 +74,40 @@ print(status)
 print(results)
 --endregion
 
+--region 3 tests completed, 2 failed
+Assertions.AssertType(type({}), type({}), "Assertions.AssertType")
 Assertions.AssertType(type({}), type(""), "Assertions.AssertType")
 Assertions.AssertType({}, {}, "Assertions.AssertType")
 status, results = pcall(Assertions.Result)
 print(status)
 print(results)
+--endregion
+
+--region 3 tests completed, 2 failed
+Assertions.AssertError("foo", "Assertions.AssertType")
+Assertions.AssertError(
+    function()
+    end,
+    "Assertions.AssertType"
+)
+Assertions.AssertError(
+    function()
+        error()
+    end,
+    "Assertions.AssertType"
+)
+status, results = pcall(Assertions.Result)
+print(status)
+print(results)
+--endregion
+
+--region 5 tests completed, 4 failed
+Assertions.AssertTableEqual(nil, nil)
+Assertions.AssertTableEqual(nil, {})
+Assertions.AssertTableEqual({ "foo" }, {})
+Assertions.AssertTableEqual({ "foo" }, { "bar" })
+Assertions.AssertTableEqual({ "foo", "bar" }, { "foo", "bar" })
+status, results = pcall(Assertions.Result)
+print(status)
+print(results)
+--endregion
