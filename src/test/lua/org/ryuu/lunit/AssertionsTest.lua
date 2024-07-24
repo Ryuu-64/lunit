@@ -5,28 +5,20 @@ local Assertions = require "org.ryuu.lunit.Assertions"
 
 local status, results
 
---region 1 test completed, 1 failed
+--region 2 tests completed, 1 failed
 Assertions.AssertEqual(nil, nil)
-Assertions.Result()
---endregion
-
---region 1 test completed, 1 failed
 Assertions.AssertEqual({}, nil)
 status, results = pcall(Assertions.Result)
 print(status)
 print(results)
 --endregion
 
---region 1 test completed, 1 failed
+--region 2 tests completed, 1 failed
 Assertions.AssertNotEqual(37, 37)
+Assertions.AssertNotEqual(37, 42)
 status, results = pcall(Assertions.Result)
 print(status)
 print(results)
---endregion
-
---region 1 test completed, 0 failed
-Assertions.AssertNotEqual(37, 42)
-Assertions.Result()
 --endregion
 
 local table1 = {}
