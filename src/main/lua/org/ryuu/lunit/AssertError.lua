@@ -10,8 +10,8 @@ return function(errorFunction, messageOrSupplier)
             typeOfErrorFunction
         )
         AssertionFailure.Instantiate()
-            :SetMessageOrSupplier(messageOrSupplier)
-            :SetCause(cause)
+            :MessageOrSupplier(messageOrSupplier)
+            :Cause(cause)
             :Error()
     end
 
@@ -21,7 +21,7 @@ return function(errorFunction, messageOrSupplier)
     end
 
     AssertionFailure.Instantiate()
-        :SetMessageOrSupplier(messageOrSupplier)
-        :SetCause("expected an error, but no error was produced")
+        :MessageOrSupplier(messageOrSupplier)
+        :Cause("expected an error, but no error was produced")
         :Error()
 end

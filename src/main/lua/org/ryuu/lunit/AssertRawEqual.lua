@@ -6,8 +6,8 @@ return function(expected, actual, messageOrSupplier)
     end
 
     AssertionFailure.Instantiate()
-        :SetMessageOrSupplier(messageOrSupplier)
-        :SetExpected(expected)
-        :SetActual(actual)
+        :MessageOrSupplier(messageOrSupplier)
+        :Expected(expected)
+        :Actual(actual)
         :Error()
 end

@@ -9,8 +9,8 @@ return function(condition, messageOrSupplier)
     end
     
     AssertionFailure.Instantiate()
-        :SetMessageOrSupplier(messageOrSupplier)
-        :SetExpected(true)
-        :SetActual(false)
+        :MessageOrSupplier(messageOrSupplier)
+        :Expected(true)
+        :Actual(false)
         :Error()
 end

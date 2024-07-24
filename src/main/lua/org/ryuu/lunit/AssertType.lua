@@ -23,7 +23,6 @@ local function Is(value)
     return true
 end
 
----
 return function(expected, actual, messageOrSupplier)
     --region try error if expected or actual is not type
     local causes = {}
@@ -36,8 +35,8 @@ return function(expected, actual, messageOrSupplier)
     if #causes ~= 0 then
         table.insert(causes, "expected and actual should be type string return by type()")
         AssertionFailure.Instantiate()
-            :SetMessageOrSupplier(messageOrSupplier)
-            :SetCause(table.concat(causes, ", "))
+            :MessageOrSupplier(messageOrSupplier)
+            :Cause(table.concat(causes, ", "))
             :Error()
     end
     --endregion
@@ -47,9 +46,9 @@ return function(expected, actual, messageOrSupplier)
     end
 
     AssertionFailure.Instantiate()
-        :SetMessageOrSupplier(messageOrSupplier)
-        :SetIsExpected(true)
-        :SetExpected(expected)
-        :SetActual(actual)
+        :MessageOrSupplier(messageOrSupplier)
+        :IsExpected(true)
+        :Expected(expected)
+        :Actual(actual)
         :Error()
 end

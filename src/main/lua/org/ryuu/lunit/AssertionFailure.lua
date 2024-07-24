@@ -22,28 +22,28 @@ function AssertionFailure.Instantiate()
     return instance
 end
 
-function AssertionFailure:SetMessageOrSupplier(messageOrSupplier)
+function AssertionFailure:MessageOrSupplier(messageOrSupplier)
     self.messageOrSupplier = messageOrSupplier
     return self
 end
 
 --TODO REMOVE Set
-function AssertionFailure:SetCause(cause)
+function AssertionFailure:Cause(cause)
     self.cause = cause
     return self
 end
 
-function AssertionFailure:SetIsExpected(isExpected)
+function AssertionFailure:IsExpected(isExpected)
     self.isExpected = isExpected
     return self
 end
 
-function AssertionFailure:SetExpected(expected)
+function AssertionFailure:Expected(expected)
     self.expected = expected
     return self
 end
 
-function AssertionFailure:SetActual(actual)
+function AssertionFailure:Actual(actual)
     self.actual = actual
     return self
 end
