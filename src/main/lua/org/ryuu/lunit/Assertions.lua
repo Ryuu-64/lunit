@@ -13,75 +13,75 @@ local AssertTableEqual = require "org.ryuu.lunit.AssertTableEqual"
 ---@class Assertions
 local Assertions = {}
 
-local assertResults = {}
+local results = {}
 
 function Assertions.AssertEqual(expected, actual, messageOrSupplier)
     local status, error = pcall(AssertEqual, expected, actual, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertNotEqual(unexpected, actual, messageOrSupplier)
     local status, error = pcall(AssertNotEqual, unexpected, actual, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertRawEqual(expected, actual, messageOrSupplier)
     local status, error = pcall(AssertRawEqual, expected, actual, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertNotRawEqual(unexpected, actual, messageOrSupplier)
     local status, error = pcall(AssertNotRawEqual, unexpected, actual, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertTrue(condition, messageOrSupplier)
     local status, error = pcall(AssertTrue, condition, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertFalse(condition, messageOrSupplier)
     local status, error = pcall(AssertFalse, condition, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertNil(actual, messageOrSupplier)
     local status, error = pcall(AssertNil, actual, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertNotNil(actual, messageOrSupplier)
     local status, error = pcall(AssertNotNil, actual, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertType(expected, actual, messageOrSupplier)
     local status, error = pcall(AssertType, expected, actual, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertError(errorFunction, messageOrSupplier)
     local status, error = pcall(AssertError, errorFunction, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
 function Assertions.AssertTableEqual(expected, actual, messageOrSupplier)
     local status, error = pcall(AssertTableEqual, expected, actual, messageOrSupplier)
-    table.insert(assertResults, { status = status, error = error })
+    table.insert(results, { status = status, error = error })
     return status, error
 end
 
-local function AnalyzeResults(results)
+local function AnalyzeResults()
     local totalCount = #results
     local failedCount = 0
     local errorMessages = {}
@@ -113,8 +113,8 @@ local function ConcatenateErrorMessages(errorMessages)
 end
 
 function Assertions.Result()
-    local totalCount, failedCount, errorMessages = AnalyzeResults(assertResults)
-    assertResults = {}
+    local totalCount, failedCount, errorMessages = AnalyzeResults()
+    results = {}
 
     local resultString = GetResultString(totalCount, failedCount)
     if failedCount == 0 then
