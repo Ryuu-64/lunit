@@ -1,4 +1,4 @@
-﻿local mainPath = "..\\..\\main\\lua\\?.lua"
+﻿local mainPath = "../src/?.lua"
 package.path = package.path .. ";" .. mainPath
 
 local Assertions = require "org.ryuu.lunit.Assertions"

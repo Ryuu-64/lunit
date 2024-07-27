@@ -1,4 +1,4 @@
-﻿local mainPath = "..\\..\\main\\lua\\?.lua"
+﻿local mainPath = "../src/?.lua"
 package.path = package.path .. ";" .. mainPath
 
 local AssertNotRawEqual = require "org.ryuu.lunit.AssertNotRawEqual"
@@ -30,23 +30,18 @@ local function AssertNotRawEqualWithSameVariable()
     end
 end
 
-
 local function AssertNotRawEqualWithMessage()
-    local status, result = pcall(AssertNotRawEqual, nil, nil, "message")
+    local status, _ = pcall(AssertNotRawEqual, nil, nil, "message")
     if status then
         error()
     end
-
-    print(result)
 end
 
 local function AssertNotRawEqualWithMessageSupplier()
-    local status, result = pcall(AssertNotRawEqual, nil, nil, "message supplier")
+    local status, _ = pcall(AssertNotRawEqual, nil, nil, "message supplier")
     if status then
         error()
     end
-
-    print(result)
 end
 
 AssertNotRawEqualWithDifferentObjects()
