@@ -1,6 +1,4 @@
-﻿local mainPath = "../src/?.lua"
-package.path = package.path .. ";" .. mainPath
-
+﻿require "org.ryuu.lunit.InitializeSrcPackagePath"
 local AssertNotRawEqual = require "org.ryuu.lunit.AssertNotRawEqual"
 
 local function AssertNotRawEqualWithDifferentObjects()
